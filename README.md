@@ -1,20 +1,15 @@
 # Joyce Mary Nails - Android APK
 
-Aplicativo Android da Joyce Mary Nails, seguindo a mesma ideia do app CellCerto.
+Aplicativo Android da Joyce Mary Nails baseado diretamente no arquivo **Joyce Mary Nails APP V3 Sistema**.
 
-## Como funciona
-- Abre o site Joyce Mary Nails dentro do aplicativo Android.
-- Mantém navegação dentro do app.
-- Links do WhatsApp abrem no aplicativo do WhatsApp.
-- Interface em tela cheia, sem barra de navegador.
-- Geração automática do APK pelo GitHub Actions.
+## Esta versão
+- O aplicativo V3 fica **embutido dentro do APK** em `android_asset/index.html`.
+- O APK não depende do Netlify para abrir a interface principal.
+- Mantém Serviços, Galeria, Agendamento, Área da Cliente e Painel Joyce/Admin.
+- Mantém os dados locais no aparelho usando `localStorage`.
+- Senha administrativa da versão enviada: **221**.
+- Links do WhatsApp abrem fora do aplicativo.
+- As fotos continuam sendo carregadas do repositório público Joyce Mary Nails na internet.
 
-Site usado no aplicativo:
-https://comfy-marshmallow-d0c96f.netlify.app/
-
-## Baixar o APK
-1. Abra a aba **Actions** deste repositório.
-2. Entre em **Gerar APK Joyce Mary Nails**.
-3. Abra a execução concluída.
-4. Em **Artifacts**, baixe **Joyce-Mary-Nails-APK**.
-5. Extraia o ZIP e instale o arquivo **app-debug.apk** no Android.
+## APK
+O GitHub Actions gera automaticamente o APK em **Actions > Gerar APK Joyce Mary Nails > Artifacts**.
