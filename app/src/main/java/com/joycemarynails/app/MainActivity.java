@@ -13,7 +13,7 @@ import android.webkit.WebViewClient;
 
 public class MainActivity extends Activity {
     private WebView webView;
-    private static final String SITE_URL = "https://comfy-marshmallow-d0c96f.netlify.app/";
+    private static final String APP_URL = "file:///android_asset/index.html";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +34,15 @@ public class MainActivity extends Activity {
         settings.setBuiltInZoomControls(false);
         settings.setDisplayZoomControls(false);
         settings.setSupportZoom(false);
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
 
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                Uri uri = request.getUrl();
+            private boolean abrirFora(Uri uri) {
                 String scheme = uri.getScheme();
                 String host = uri.getHost();
 
-                if ("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme)) {
+                if ("https".equalsIgnoreCase(scheme) || "http".equalsIgnoreCase(scheme)) {
                     if (host != null && (host.contains("wa.me") || host.contains("whatsapp.com"))) {
                         try {
                             startActivity(new Intent(Intent.ACTION_VIEW, uri));
@@ -53,15 +52,29 @@ public class MainActivity extends Activity {
                     return false;
                 }
 
+                if ("file".equalsIgnoreCase(scheme)) {
+                    return false;
+                }
+
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, uri));
                 } catch (Exception ignored) {}
                 return true;
             }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return abrirFora(request.getUrl());
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return abrirFora(Uri.parse(url));
+            }
         });
 
         if (savedInstanceState == null) {
-            webView.loadUrl(SITE_URL);
+            webView.loadUrl(APP_URL);
         } else {
             webView.restoreState(savedInstanceState);
         }
